@@ -1,0 +1,32 @@
+{
+  "name": "express-node",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon ./bin/www",
+    "dev1": "node ./bin/www"
+  },
+  "dependencies": {
+    "axios": "^0.25.0",
+    "body-parser": "^1.18.3",
+    "canvas": "^2.9.0",
+    "child_process": "^1.0.2",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "jquery": "^3.6.0",
+    "jsdom": "^19.0.0",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.4",
+    "node-cpdir": "^1.0.0",
+    "nodemon": "^2.0.15",
+    "qs": "^6.10.3",
+    "three": "^0.135.0",
+    "three-gltf-exporter": "^0.0.1",
+    "three-gltf-loader": "^1.111.0",
+    "vblob": "^1.0.2"
+  }
+}
