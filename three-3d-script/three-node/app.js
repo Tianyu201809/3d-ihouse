@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/", indexRouter);
 app.use("/upload", uploadRouter);
-app.use("/render", renderRouter);
+// app.use("/render", renderRouter);
 app.use("/callRendererRouter", callRendererRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
