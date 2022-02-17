@@ -4,14 +4,24 @@ const path = require('path');
 const router = express.Router();
 
 router.post("/call", async (req, res) => {
-  const renderId = req.body.renderId || 'KbbEoG2Zfj8_qingshe_20'
+  const renderId = String(req.body.renderId) || '' || 'KbbEoG2Zfj8_qingshe_20'
   try {
     const rendererPath = path.resolve(__dirname, '..', 'trex220115', 'TrexCLI.exe')
+
     const resourceDirPath = path.resolve(__dirname, '..', 'resources', renderId)
     let message = await execCommand(rendererPath, [resourceDirPath])
+    const isProcessError = checkMessageProcess(message)
+    if (isProcessError) {
+      res.send({
+        code: 2,
+        message: isProcessError,
+        error,
+        renderId
+      })
+      return
+    }
     res.send({
       code: 1,
-      message: 'success',
       renderId,
       message
     })
@@ -26,24 +36,31 @@ router.post("/call", async (req, res) => {
 });
 
 
-
+/**
+ * exec command function
+ * @param { *String } command 
+ * @param { *Array<string> } option 
+ * @returns { Promise }
+ */
 function execCommand(command, option) {
   return new Promise((resolve, reject) => {
     const ls = spawn(command, option)
-    
-    const result = []
+
+    const successResult = []
+    const errorResult = []
     ls.stdout.on('data', (data) => {
-      result.push(messageParse(data.toString()))
+      successResult.push(messageParse(data.toString()))
     })
-    ls.stderr.on('data', (data) => {
-      // console.log('error:', data.toString())
+    ls.stderr.on('data', (errorMsg) => {
+      console.log(errorMsg.toString())
+      errorResult.push(handleErrorMessage(errorMsg.toString()))
     })
-    ls.on('close', (code, singnal) => {
+    ls.on('close', code => {
       if (code === 3) {
-        reject(result)
+        reject(errorResult)
         return
       }
-      resolve(result)
+      resolve(successResult)
     })
   })
 }
@@ -57,21 +74,28 @@ const MESSAGE_REG = /^#(\d{3})(.+)/
  */
 function messageParse(message) {
   const [, type, dataRaw] = message.match(MESSAGE_REG);
-  
+
   return {
     type,
     message: JSON.parse(dataRaw)
   }
 }
 
-/**
- * error message 
- */
-function errorMessageHandle(errorMessage) {
-
+function handleErrorMessage(message) {
+  return {
+    error: message
+  }
 }
 
+function checkMessageProcess(result) {
+  let message = null
 
-
+  result.forEach(element => {
+    if (element.type === '004') {
+      message = element.message.Failed
+    }
+  });
+  return message
+}
 
 module.exports = router
