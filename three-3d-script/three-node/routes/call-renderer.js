@@ -4,7 +4,8 @@ const path = require('path');
 const router = express.Router();
 
 router.post("/call", async (req, res) => {
-  const renderId = String(req.body.renderId) || '' || 'KbbEoG2Zfj8_qingshe_20'
+  const renderId = req.body.renderId
+  
   try {
     const rendererPath = path.resolve(__dirname, '..', 'trex220115', 'TrexCLI.exe')
 
@@ -94,7 +95,11 @@ function checkMessageProcess(result) {
     if (element.type === '004') {
       message = element.message.Failed
     }
-  });
+  })
+
+  if (message === null) {
+    message = 'error'
+  }
   return message
 }
 
