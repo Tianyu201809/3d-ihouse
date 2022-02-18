@@ -1,3 +1,4 @@
+import { Utils } from './class/Utils'
 import { loadThreeGLTFExporterPlugin } from './lib/three-gltf-exporter'
 import {
   uploadHouseGLTF,
@@ -59,7 +60,11 @@ async function uploadResources() {
     // 上传户型单位
     await uploadSceneUnit(houseUploadUrl)
     // 调用渲染器
+    await Utils.sleep(2000)
     await callRenderer(renderId)
+
+    // 完成提示
+    alert(renderId + '渲染完成')
   } catch (error) {
     console.log(error)
   }
@@ -69,7 +74,7 @@ async function uploadResources() {
  */
 window.isZQBackendSupported = function () {
   const data = JSON.parse(window.opener.mPluginsClass.mJsonData)
-  
+
   return data && data.length > 0
 }
 

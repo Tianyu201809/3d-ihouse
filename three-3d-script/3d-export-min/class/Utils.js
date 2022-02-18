@@ -42,4 +42,11 @@ export class Utils {
     const n1 = vector3[2] / result
     return [l1, m1, n1]
   }
+  static sleep(time = 2000) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve()
+      }, time)
+    })
+  }
 }
