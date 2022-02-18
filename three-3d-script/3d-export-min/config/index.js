@@ -1,7 +1,10 @@
-export const uploadUrl = `http://localhost:3000/upload/uploadFile`
+const BasicUrl = `http://localhost:3000`
+const uploadUrl = BasicUrl + `/upload/uploadFile`
+const callRenderer = BasicUrl + `/callRendererRouter`
 export const houseUploadUrl = uploadUrl + '/house'
 export const furnitureUploadUrl = uploadUrl + '/furniture'
 export const actorsUploadUrl = uploadUrl + '/actors'
 export const frameUploadUrl = uploadUrl + '/frame'
 export const lightUploadUrl = uploadUrl + '/light'
 export const renderId = window.sessionStorage.getItem('zqSchemeName') || window.localStorage.getItem('renderID') || ''
+export const callRendererUrl = callRenderer + '/call' // 调用渲染器接口

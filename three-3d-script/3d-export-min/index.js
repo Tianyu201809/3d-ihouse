@@ -21,9 +21,12 @@ import {
   furnitureUploadUrl,
   actorsUploadUrl,
   frameUploadUrl,
-  lightUploadUrl
+  lightUploadUrl,
+  renderId
 } from './config/index'
-
+import {
+  callRenderer
+} from './renderer/index'
 /**
  * 文件下载函数
  * 户型文件
@@ -46,6 +49,7 @@ async function exportResources() {
 async function uploadResources() {
   try {
     const flag = window.isZQBackendSupported()
+
     await uploadHouseGLTF(scene3D, { type: ["Mesh"], name: "" }, houseUploadUrl)
     await uploadCameraJSON(camera, frameUploadUrl)
     // 如果是众趣后端数据，则需要上传frames.json
@@ -54,6 +58,8 @@ async function uploadResources() {
     await uploadFurnitureFragmentGLTF(scene3D, furnitureUploadUrl, actorsUploadUrl)
     // 上传户型单位
     await uploadSceneUnit(houseUploadUrl)
+    // 调用渲染器
+    await callRenderer(renderId)
   } catch (error) {
     console.log(error)
   }
@@ -63,8 +69,12 @@ async function uploadResources() {
  */
 window.isZQBackendSupported = function () {
   const data = JSON.parse(window.opener.mPluginsClass.mJsonData)
+  
   return data && data.length > 0
 }
+
+
+
 /**
  * ***************************************
  * 以下代码为可修改部分逻辑
@@ -89,7 +99,7 @@ window.exec = async function () {
     alert(error)
   }
 }
-window.exec2 = async function(){
+window.exec2 = async function () {
   exportAllModule()
 }
 exec()
