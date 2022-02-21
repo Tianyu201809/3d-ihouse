@@ -1,15 +1,19 @@
-const { spawn } = require('child_process');
+const { spawn, exec } = require('child_process');
 const express = require("express");
 const path = require('path');
 const router = express.Router();
 
 router.post("/call", async (req, res) => {
   const renderId = req.body.renderId
-  
+
   try {
     const rendererPath = path.resolve(__dirname, '..', 'trex220221', 'TrexCLI.exe')
-
+    console.log('查看执行路径：')
+    console.log(rendererPath)
     const resourceDirPath = path.resolve(__dirname, '..', 'resources', renderId)
+    console.log(resourceDirPath)
+    // 定位到当前目录
+    await redirectTarget()
     let message = await execCommand(rendererPath, [resourceDirPath])
     const isProcessError = checkMessageProcess(message)
     if (isProcessError) {
@@ -50,6 +54,7 @@ function execCommand(command, option) {
     const successResult = []
     const errorResult = []
     ls.stdout.on('data', (data) => {
+      console.log(data.toString())
       successResult.push(messageParse(data.toString()))
     })
     ls.stderr.on('data', (errorMsg) => {
@@ -101,6 +106,19 @@ function checkMessageProcess(result) {
     message = 'error'
   }
   return message
+}
+
+async function redirectTarget() {
+  return new Promise((resolve) => {
+    const rendererPath = path.resolve(__dirname, '..', 'trex220221')
+    exec(`cd ${rendererPath}`, (err) => {
+      console.log(err)
+      resolve()
+      return
+    })
+  })
+
+
 }
 
 module.exports = router

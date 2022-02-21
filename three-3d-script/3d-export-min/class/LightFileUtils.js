@@ -145,8 +145,8 @@ export class LightFileUitls {
       ],
       Intensity: +mLightClass.m_fSunIntensity,
       // Dir: mLightClass.m_fSunDirection, // 需要转化
-      Phi: 0,
-      Theta: 0,
+      Pitch: 0,
+      Yaw: 0,
       Distort: 0.3,
       Enable: mLightClass.m_bEnable ? 1 : 0,
     }
