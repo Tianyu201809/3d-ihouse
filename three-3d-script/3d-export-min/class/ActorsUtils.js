@@ -23,7 +23,7 @@ export class ActorsUtils {
     }
     this.Parts.unshift(obj)
   }
-  
+
   /**
    * 添加家具数据json
    * @param {*} matrix 
@@ -35,9 +35,7 @@ export class ActorsUtils {
   addChildren(matrix, filename, lowModel = "", isErrorModel = false) {
     if (!matrix || !filename) return
     const obj = {
-      Name: filename,
-      HandType: this.HandType,
-      LengthUnit: this.LengthUnit,
+      Package: filename,
       Transform: matrix,
       lowModel,
       isErrorModel
@@ -52,6 +50,8 @@ export class ActorsUtils {
   generateOutputObject() {
     let childrenNode = {}
     childrenNode['Name'] = this.childrenNodeName
+    childrenNode['HandType'] = this.HandType
+    childrenNode['LengthUnit'] = this.LengthUnit
     childrenNode['Actors'] = this.Childrens
     this.Parts.push(childrenNode)
     return this.Parts

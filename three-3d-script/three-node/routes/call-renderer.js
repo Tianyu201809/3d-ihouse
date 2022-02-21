@@ -7,7 +7,7 @@ router.post("/call", async (req, res) => {
   const renderId = req.body.renderId
   
   try {
-    const rendererPath = path.resolve(__dirname, '..', 'trex220115', 'TrexCLI.exe')
+    const rendererPath = path.resolve(__dirname, '..', 'trex220221', 'TrexCLI.exe')
 
     const resourceDirPath = path.resolve(__dirname, '..', 'resources', renderId)
     let message = await execCommand(rendererPath, [resourceDirPath])

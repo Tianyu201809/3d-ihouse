@@ -9,9 +9,9 @@ export class LightFileUitls {
   // 导出JSON文件
   generateLightJSON(mLightClass) {
     const outputLightObj = {
-      SphereLights: {},
-      SpotLights: {},
-      RectLights: {},
+      SphereLights: [],
+      SpotLights: [],
+      RectLights: [],
       Sun: {},
       Sky: {},
     }
@@ -21,15 +21,15 @@ export class LightFileUitls {
       switch (lightType) {
         case 0: // 点光
           lightData = this.generateSphereLightObject(light)
-          outputLightObj["SphereLights"][light.mLightMesh.uuid] = lightData
+          outputLightObj["SphereLights"].push(lightData)
           break
         case 1: // 射灯
           lightData = this.generateSpotLightObject(light)
-          outputLightObj["SpotLights"][light.mLightMesh.uuid] = lightData
+          outputLightObj["SpotLights"].push(lightData)
           break
         case 2: // 矩形灯
           lightData = this.generateRectLightObject(light)
-          outputLightObj["RectLights"][light.mLightMesh.uuid] = lightData
+          outputLightObj["RectLights"].push(lightData)
           break
       }
     })
@@ -43,7 +43,7 @@ export class LightFileUitls {
   generateSphereLightObject(item) {
     return {
       Actor: this.Actor,
-      Hand: this.Hand,
+      // Hand: this.Hand,
       Center: [
         +item.mLightMesh.position.x,
         +item.mLightMesh.position.y,
@@ -59,12 +59,12 @@ export class LightFileUitls {
     // const helperBox = this._commonGeoTool(item)
     // 获取世界坐标
     const itemMatrixWorld = item.mLightMesh.matrixWorld.elements
-    const Normal = this._calcRectLightNormal(itemMatrixWorld)
+    const Direction = this._calcRectLightNormal(itemMatrixWorld)
     const Tangent = this._calcRectLightTangent(itemMatrixWorld) // x轴 前四个
     const Bitangent = this._calcRectLightBitangent(itemMatrixWorld) // y轴
     return {
       Actor: this.Actor,
-      Hand: this.Hand,
+      // Hand: this.Hand,
       Width: +item.m_fAreaWidth, // 灯光宽度
       Height: +item.m_fAreaLength, // 灯光长度  ？离地高字段
       Intensity: +item.m_fIntensity, // 光照强度
@@ -74,7 +74,7 @@ export class LightFileUitls {
         +item.mLightMesh.position.y,
         +item.mLightMesh.position.z,
       ], // 灯光中心点
-      Normal: Normal || [0.0, -1.0, 0.0], // 光线朝向 （待确定）
+      Direction: Direction || [0.0, -1.0, 0.0], // 光线朝向 （待确定）
       Tangent: Tangent || [1.0, 0.0, 0.0], // 宽边方向（待确定）
       Bitangent: Bitangent || [0.0, 0.0, 1.0], // 矩形高边方向（待确定）
       TwoSide: item.m_bAreaDouble ? 1 : 0, // 双面发光
@@ -119,7 +119,7 @@ export class LightFileUitls {
   generateSpotLightObject(item) {
     return {
       Actor: this.Actor,
-      Hand: this.Hand,
+      // Hand: this.Hand,
       Intensity: +item.m_fIntensity,
       Radius: 100,
       BegAngle: 15.0,
@@ -137,7 +137,7 @@ export class LightFileUitls {
   // 生成太阳光对象
   generateSunLightObject(mLightClass) {
     return {
-      Hand: this.Hand,
+      // Hand: this.Hand,
       Color: [
         +mLightClass.m_fLightR,
         +mLightClass.m_fLightG,
@@ -155,7 +155,7 @@ export class LightFileUitls {
   generateSkyLightObject() {
     const imageurl = $(".body-item-img img").attr("src") || ""
     return {
-      Hand: this.Hand,
+      // Hand: this.Hand,
       Color: [1, 1, 1],
       Intensity: 1,
       Brightness: 1,
