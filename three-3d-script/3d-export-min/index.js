@@ -61,10 +61,10 @@ async function uploadResources() {
     await uploadSceneUnit(houseUploadUrl)
     // 调用渲染器
     await Utils.sleep(2000)
-    await callRenderer(renderId)
+    // await callRenderer(renderId)
 
     // 完成提示
-    alert(renderId + '场景渲染完成')
+    // alert(renderId + '场景渲染完成')
   } catch (error) {
     console.log(error)
   }

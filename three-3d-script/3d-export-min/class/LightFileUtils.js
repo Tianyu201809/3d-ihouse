@@ -4,6 +4,7 @@ export class LightFileUitls {
   constructor() {
     this.Hand = "LeftY"
     this.helperBox = null
+    this.Actor = "户型"
   }
   // 导出JSON文件
   generateLightJSON(mLightClass) {
@@ -41,6 +42,7 @@ export class LightFileUitls {
   // 生成点光源对象
   generateSphereLightObject(item) {
     return {
+      Actor: this.Actor,
       Hand: this.Hand,
       Center: [
         +item.mLightMesh.position.x,
@@ -61,6 +63,7 @@ export class LightFileUitls {
     const Tangent = this._calcRectLightTangent(itemMatrixWorld) // x轴 前四个
     const Bitangent = this._calcRectLightBitangent(itemMatrixWorld) // y轴
     return {
+      Actor: this.Actor,
       Hand: this.Hand,
       Width: +item.m_fAreaWidth, // 灯光宽度
       Height: +item.m_fAreaLength, // 灯光长度  ？离地高字段
@@ -115,6 +118,7 @@ export class LightFileUitls {
   // 生成射灯（聚光灯）
   generateSpotLightObject(item) {
     return {
+      Actor: this.Actor,
       Hand: this.Hand,
       Intensity: +item.m_fIntensity,
       Radius: 100,

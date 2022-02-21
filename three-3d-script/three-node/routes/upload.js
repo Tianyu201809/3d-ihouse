@@ -223,6 +223,7 @@ const copyFile = (sourcePath, targetPath, filename, renderId) => {
       }
     })
   } catch (e) {
+    console.log(e)
     throw new Error(e)
   }
 }
@@ -236,24 +237,42 @@ const mappingFurniture = function (actorsPath, renderId) {
   const file = fs.readFileSync(actorsPath, 'utf-8')
   const fileObject = JSON.parse(file)
   let exitErrorModel = false
-  fileObject.Actors.forEach((item) => {
-    // mapping high model
-    item.Parts.forEach((iv) => {
-      for (let i = 0; i < config.length; i++) {
-        if (iv.lowModel === config[i].id) {
-          iv.Package = config[i].highModel ? config[i].highModel : iv.lowModel
-          iv.Hand = highModelHand
-        }
+  const ActorsListNode = fileObject.filter(item => item.Actors)
+  const ActorsList = ActorsListNode[0]
+  console.log(ActorsList)
+  ActorsList.Actors.forEach((iv) => {
+    for (let i = 0; i < config.length; i++) {
+      if (iv.lowModel === config[i].id) {
+        iv.Name = config[i].highModel ? config[i].highModel : iv.lowModel
+        iv.Hand = highModelHand
       }
-      // check model is error model
-      if (iv.isErrorModel) {
-        exitErrorModel = true
-        const originModel = iv.Package
-        iv.originModel = originModel
-        iv.Package = DefaultGLTFModelName
-      }
-    })
+    }
+    // check model is error model
+    if (iv.isErrorModel) {
+      exitErrorModel = true
+      const originModel = iv.Name
+      iv.originModel = originModel
+      iv.Name = DefaultGLTFModelName
+    }
   })
+  // ActorsList.Actors.forEach((item) => {
+  //   // mapping high model
+  //   item.forEach((iv) => {
+  //     for (let i = 0; i < config.length; i++) {
+  //       if (iv.lowModel === config[i].id) {
+  //         iv.Name = config[i].highModel ? config[i].highModel : iv.lowModel
+  //         iv.Hand = highModelHand
+  //       }
+  //     }
+  //     // check model is error model
+  //     if (iv.isErrorModel) {
+  //       exitErrorModel = true
+  //       const originModel = iv.Name
+  //       iv.originModel = originModel
+  //       iv.Name = DefaultGLTFModelName
+  //     }
+  //   })
+  // })
 
   // exit error model， create default-model gltf to assets
   if (exitErrorModel) createNormalModel2Asset(renderId)
