@@ -17,7 +17,8 @@ export function generateCameraJSON(camera) {
     x1 + x2, y1 + y2, z1 + z2
   ]
   const Camera = {
-    Hand: "LeftY", // 坐标
+    // Hand: "LeftY", // 坐标
+    Actor: "House",
     Origin: [+camera.position.x, +camera.position.y, +camera.position.z],
     Target,
     Up: [+camera.up.x, +camera.up.y, +camera.up.z],
