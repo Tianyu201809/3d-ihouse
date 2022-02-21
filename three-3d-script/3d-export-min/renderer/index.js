@@ -2,7 +2,7 @@
  * 调用渲染器
  */
 import { callRendererUrl } from '../config/index'
-export async function callRenderer(renderId) {
+export function callRenderer(renderId) {
   return new Promise((resolve, reject) => {
     $.ajax({
       type: 'post',
