@@ -4,7 +4,7 @@ export class LightFileUitls {
   constructor() {
     this.Hand = "LeftY"
     this.helperBox = null
-    this.Actor = "户型"
+    this.Actor = "House"
   }
   // 导出JSON文件
   generateLightJSON(mLightClass) {
