@@ -35,7 +35,11 @@ export class ActorsUtils {
   addChildren(matrix, filename, lowModel = "", isErrorModel = false) {
     if (!matrix || !filename) return
     const obj = {
-      Package: filename,
+      Package: {
+        Name: filename,
+        HandType: this.HandType
+      },
+      // Package: filename,
       Transform: matrix,
       lowModel,
       isErrorModel

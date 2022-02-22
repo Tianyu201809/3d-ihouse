@@ -239,40 +239,23 @@ const mappingFurniture = function (actorsPath, renderId) {
   let exitErrorModel = false
   const ActorsListNode = fileObject.filter(item => item.Actors)
   const ActorsList = ActorsListNode[0]
-  console.log(ActorsList)
+
   ActorsList.Actors.forEach((iv) => {
     for (let i = 0; i < config.length; i++) {
       if (iv.lowModel === config[i].id) {
-        iv.Name = config[i].highModel ? config[i].highModel : iv.lowModel
-        iv.Hand = highModelHand
+        iv.Package.Name = config[i].highModel ? config[i].highModel : iv.lowModel
+        iv.Package.HandType = highModelHand
+        break
       }
     }
     // check model is error model
     if (iv.isErrorModel) {
       exitErrorModel = true
-      const originModel = iv.Name
+      const originModel = iv.Package.Name
       iv.originModel = originModel
       iv.Name = DefaultGLTFModelName
     }
   })
-  // ActorsList.Actors.forEach((item) => {
-  //   // mapping high model
-  //   item.forEach((iv) => {
-  //     for (let i = 0; i < config.length; i++) {
-  //       if (iv.lowModel === config[i].id) {
-  //         iv.Name = config[i].highModel ? config[i].highModel : iv.lowModel
-  //         iv.Hand = highModelHand
-  //       }
-  //     }
-  //     // check model is error model
-  //     if (iv.isErrorModel) {
-  //       exitErrorModel = true
-  //       const originModel = iv.Name
-  //       iv.originModel = originModel
-  //       iv.Name = DefaultGLTFModelName
-  //     }
-  //   })
-  // })
 
   // exit error model， create default-model gltf to assets
   if (exitErrorModel) createNormalModel2Asset(renderId)

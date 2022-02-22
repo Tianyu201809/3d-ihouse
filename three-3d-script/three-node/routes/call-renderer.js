@@ -1,4 +1,4 @@
-const { spawn } = require('child_process');
+const { spawn, exec } = require('child_process');
 const express = require("express");
 const path = require('path');
 const router = express.Router();
@@ -10,6 +10,7 @@ router.post("/call", async (req, res) => {
     const rendererPath = path.resolve(__dirname, '..', 'trex220221', 'TrexCLI.exe')
 
     const resourceDirPath = path.resolve(__dirname, '..', 'resources', renderId)
+    // await redirectTarget()
     let message = await execCommand(rendererPath, [resourceDirPath])
     const isProcessError = checkMessageProcess(message)
 
@@ -105,16 +106,16 @@ function checkMessageProcess(result) {
   return message
 }
 
-// async function redirectTarget() {
-//   return new Promise((resolve) => {
-//     const rendererPath = path.resolve(__dirname, '..', 'trex220221')
-//     exec(`cd ${rendererPath}`, (err) => {
-//       console.log(err)
-//       console.log(1)
-//       resolve()
-//       return
-//     })
-//   })
-// }
+async function redirectTarget() {
+  return new Promise((resolve) => {
+    const rendererPath = path.resolve(__dirname, '..', 'trex220221')
+    exec(`cd ${rendererPath}`, (err) => {
+      console.log(err)
+      console.log(1)
+      resolve()
+      return
+    })
+  })
+}
 
 module.exports = router
