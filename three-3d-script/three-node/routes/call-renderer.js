@@ -2,6 +2,7 @@ const { spawn, exec } = require('child_process');
 const express = require("express");
 const path = require('path');
 const router = express.Router();
+global.renderProcess = {}
 
 router.post("/call", async (req, res) => {
   const renderId = req.body.renderId
@@ -116,6 +117,23 @@ async function redirectTarget() {
       return
     })
   })
+}
+
+function setRenderProcess(renderId, data) {
+  global.renderProcess[renderId] = data
+}
+
+function queryRenderProcess(renderId) {
+  if (!renderId) return
+  return global.renderProcess[renderId]
+}
+
+function clearCurrentRenderProcess(renderId) {
+  global.renderProcess[renderId] = null
+}
+
+function round() {
+  return Math.random().toString(16).substr(2, 8)
 }
 
 module.exports = router
