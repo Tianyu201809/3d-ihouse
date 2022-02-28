@@ -2,6 +2,7 @@ import { Utils } from '../class/Utils'
 import { CompileScene } from '../class/CompileScene'
 import { generateActorsJSON } from '../generator/actors'
 import { deepClone } from '../utils/index'
+
 /**
  * 生成家具gltf
  * @param {*} scene3D
